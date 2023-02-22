@@ -35,3 +35,7 @@ out/
 
 ### VS Code ###
 .vscode/
+
+
+### Discord Token ###
+/src/main/resources/application-dev.yaml

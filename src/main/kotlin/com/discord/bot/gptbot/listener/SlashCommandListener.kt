@@ -16,7 +16,8 @@ class SlashCommandListener(val openAiService: OpenAiService) : ListenerAdapter()
 
     private fun askChatGpt(event: SlashCommandInteractionEvent) {
         val question = event.getOption("question")?.asString
-        val answer = openAiService.ask(question)
-        event.reply(answer).queue()
+        openAiService.ask(question).subscribe { answer ->
+            event.reply(answer).queue()
+        }
     }
 }

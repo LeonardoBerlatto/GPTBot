@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.NullAndEmptySource
 import org.junit.jupiter.params.provider.ValueSource
+import reactor.core.publisher.Mono
 
 class OpenAiServiceTest {
 
@@ -21,9 +22,9 @@ class OpenAiServiceTest {
         val question = "What is the meaning of life?"
         val answer = "42"
 
-        every { repository.processText(question) } returns answer
+        every { repository.processText(question) } returns Mono.just(answer)
 
-        val result = service.ask(question)
+        val result = service.ask(question).block()
 
         assertEquals(answer, result)
     }
@@ -32,7 +33,7 @@ class OpenAiServiceTest {
     @NullAndEmptySource
     @ValueSource(strings = [" ", "  ", "   "])
     fun `should return warning message when question is null or blank`(question: String?) {
-        val result = service.ask(question)
+        val result = service.ask(question).block()
 
         assertEquals("Provide a valid question", result)
     }

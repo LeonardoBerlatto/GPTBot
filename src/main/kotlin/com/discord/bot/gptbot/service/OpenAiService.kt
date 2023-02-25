@@ -9,7 +9,9 @@ private const val INVALID_QUESTION_MESSAGE = "Provide a valid question"
 @JvmField
 val DEFAULT_MODEL = AiModel.DA_VINCI
 
-class OpenAiService(private val repository: ChatGptRepository) {
+class OpenAiService(
+    private val repository: ChatGptRepository
+) {
 
     fun ask(question: String?): Mono<String> {
         if (question.isNullOrBlank()) {

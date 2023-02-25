@@ -21,11 +21,13 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    // logging
+    implementation("io.github.microutils:kotlin-logging-jvm:3.0.5")
     // discord
     implementation("net.dv8tion:JDA:5.0.0-beta.4")
     // tests
-    implementation("org.junit.jupiter:junit-jupiter-api:5.9.2")
-    implementation("io.mockk:mockk:1.13.4")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.2")
+    testImplementation("io.mockk:mockk:1.13.4")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 

@@ -1,8 +1,10 @@
 package com.discord.bot.gptbot.service
 
+import com.discord.bot.gptbot.domain.AiModel
 import com.discord.bot.gptbot.repository.ChatGptRepository
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.slot
 import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.Assertions.*
@@ -17,16 +19,19 @@ class OpenAiServiceTest {
 
     private val service = OpenAiService(repository)
 
+    private val modelSlot = slot<AiModel>()
+
     @Test
-    fun `should return the answer when providing a valid question`() {
+    fun `should return the answer when providing a valid question passing the right model as parameter`() {
         val question = "What is the meaning of life?"
         val answer = "42"
 
-        every { repository.processText(question) } returns Mono.just(answer)
+        every { repository.processText(question, capture(modelSlot)) } returns Mono.just(answer)
 
         val result = service.ask(question).block()
 
         assertEquals(answer, result)
+        assertEquals(AiModel.DA_VINCI, modelSlot.captured)
     }
 
     @ParameterizedTest

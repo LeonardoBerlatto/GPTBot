@@ -4,4 +4,4 @@ discord:
 open-ai:
   api:
     url: https://api.openai.com/v1/
-    token: ${OPEN_API_TOKEN}
+    token: ${OPEN_AI_TOKEN}

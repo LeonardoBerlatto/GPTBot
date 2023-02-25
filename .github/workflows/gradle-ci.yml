@@ -8,6 +8,7 @@ on:
 
 env:
   DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
+  OPEN_AI_TOKEN: ${{ secrets.OPEN_AI_TOKEN }}
 
 jobs:
   build:

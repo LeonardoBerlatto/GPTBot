@@ -1,2 +1,7 @@
 discord:
   token: ${DISCORD_TOKEN}
+
+open-ai:
+  api:
+    url: https://api.openai.com/v1/
+    token: ${OPEN_API_TOKEN}

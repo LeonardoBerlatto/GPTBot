@@ -1,5 +1,9 @@
 name: Create Release
 
+permissions:
+  contents: write
+  packages: write
+
 on:
   push:
     branches:
@@ -13,6 +17,7 @@ env:
 jobs:
   create-release:
     runs-on: ubuntu-latest
+    if: ${{ contains( github.event.head_commit.message, 'release' ) }}
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
@@ -24,24 +29,21 @@ jobs:
 
       - name: Set Tag Output
         id: set-tag
-        run:  echo "::set-output name=tag_name::$(python get_version.py)"
+        run:  echo "::set-output name=tag_name::$(python ./actions/get_version.py)"
 
       - name: Create Tag
-        uses: actions/github-script@v3
-        env:
-          TAG: ${{ steps.set-tag.outputs.tag_name }}
+        uses: actions/github-script@v5
         with:
-          github-token: ${{ github.token }}
           script: |
-            github.git.createRef({
+            github.rest.git.createRef({
               owner: context.repo.owner,
               repo: context.repo.repo,
-             ref: "refs/tags/${{ steps.set-tag.outputs.tag_name }}",
+              ref: "refs/tags/${{ steps.set-tag.outputs.tag_name }}",
               sha: context.sha
             })
 
       - name: Update version in files
-        run: python update_version.py
+        run: python ./actions/update_version.py
         env:
           VERSION: ${{ steps.set-tag.outputs.tag_name }}
       
@@ -65,7 +67,7 @@ jobs:
           tags: ${{ env.DOCKER_USERNAME }}/gpt-bot:${{ steps.set-tag.outputs.tag_name }}
 
       - name: Create Release notes file
-        run: python create_release_notes.py
+        run: python ./actions/create_release_notes.py
 
       - name: Create Release on GitHub
         uses: ncipollo/release-action@v1.12.0

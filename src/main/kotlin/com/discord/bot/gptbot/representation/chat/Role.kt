@@ -1,6 +1,8 @@
 package com.discord.bot.gptbot.representation.chat
 
-enum class Role(private val text: String) {
+import com.fasterxml.jackson.annotation.JsonValue
+
+enum class Role(@JsonValue val text: String) {
     USER("user"),
     ASSISTANT("assistant");
 

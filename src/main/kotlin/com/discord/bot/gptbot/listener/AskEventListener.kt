@@ -9,27 +9,38 @@ import org.springframework.stereotype.Component
 private const val DEFAULT_ERROR_MESSAGE = "Something went wrong. Please try again later."
 
 @Component
-class SlashCommandListener(
+class AskEventListener(
     val openAiService: OpenAiService
 ) : ListenerAdapter() {
 
     private val logger = KotlinLogging.logger {}
 
     override fun onSlashCommandInteraction(event: SlashCommandInteractionEvent) {
+        event.deferReply(true).queue()
         when (event.name) {
-            "ask" -> askChatGpt(event)
+            "ask" -> {
+                val question = event.getOption("question")?.asString
+                askChatGpt(question,
+                    successCallback = {
+                        event.hook.sendMessage(it).queue()
+                    }, errorCallback = {
+                        event.hook.sendMessage(DEFAULT_ERROR_MESSAGE).queue()
+                    })
+            }
         }
     }
 
-    private fun askChatGpt(event: SlashCommandInteractionEvent) {
-        val question = event.getOption("question")?.asString
+    private fun askChatGpt(
+        question: String?,
+        successCallback: (String) -> Unit,
+        errorCallback: (Throwable) -> Unit
+    ) {
         openAiService.ask(question)
-            .doOnSuccess { event.reply(it).queue() }
+            .doOnSuccess { successCallback(it) }
             .doOnError {
                 logger.error(it) { "Error while processing question: $question - ${it.message}" }
-                event.reply(DEFAULT_ERROR_MESSAGE).queue()
+                errorCallback(it)
             }
             .subscribe()
-
     }
 }

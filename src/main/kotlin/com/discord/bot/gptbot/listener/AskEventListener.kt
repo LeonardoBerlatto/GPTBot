@@ -3,6 +3,7 @@ package com.discord.bot.gptbot.listener
 import com.discord.bot.gptbot.service.OpenAiService
 import mu.KotlinLogging
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent
 import net.dv8tion.jda.api.hooks.ListenerAdapter
 import org.springframework.stereotype.Component
 
@@ -28,6 +29,25 @@ class AskEventListener(
                     })
             }
         }
+    }
+
+    override fun onMessageReceived(event: MessageReceivedEvent) {
+        if (event.author.isBot) {
+            return
+        }
+
+        val message = event.message.contentRaw
+        if (!message.startsWith("/ask")) {
+            return
+        }
+
+        val question = message.substringAfter("/ask").trim()
+        askChatGpt(question,
+            successCallback = {
+                event.channel.sendMessage(it).queue()
+            }, errorCallback = {
+                event.channel.sendMessage(DEFAULT_ERROR_MESSAGE).queue()
+            })
     }
 
     private fun askChatGpt(

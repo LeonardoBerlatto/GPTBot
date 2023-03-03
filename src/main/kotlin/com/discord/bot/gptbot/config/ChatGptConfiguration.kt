@@ -1,7 +1,8 @@
 package com.discord.bot.gptbot.config
 
-import com.discord.bot.gptbot.repository.ChatGptRepository
+import com.discord.bot.gptbot.repository.OpenAiRepository
 import com.discord.bot.gptbot.service.OpenAiService
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -27,7 +28,7 @@ class ChatGptConfiguration {
     }
 
     @Bean
-    fun openAiService(chatGptRepository: ChatGptRepository): OpenAiService {
-        return OpenAiService(chatGptRepository)
+    fun openAiService(@Qualifier("chatCompletionRepository") openAiRepository: OpenAiRepository): OpenAiService {
+        return OpenAiService(openAiRepository)
     }
 }

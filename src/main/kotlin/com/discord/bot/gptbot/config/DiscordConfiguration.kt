@@ -1,6 +1,6 @@
 package com.discord.bot.gptbot.config
 
-import com.discord.bot.gptbot.listener.SlashCommandListener
+import com.discord.bot.gptbot.listener.AskEventListener
 import com.discord.bot.gptbot.service.OpenAiService
 import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.JDABuilder
@@ -22,7 +22,7 @@ class DiscordConfiguration {
     fun discordBot(openAiService: OpenAiService): JDA {
         val jda = JDABuilder.createDefault(token)
             .enableIntents(GatewayIntent.MESSAGE_CONTENT)
-            .addEventListeners(SlashCommandListener(openAiService))
+            .addEventListeners(AskEventListener(openAiService))
             .setActivity(Activity.listening("/ask"))
             .build()
 

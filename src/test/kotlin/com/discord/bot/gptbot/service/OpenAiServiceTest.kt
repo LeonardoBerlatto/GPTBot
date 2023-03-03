@@ -1,7 +1,7 @@
 package com.discord.bot.gptbot.service
 
 import com.discord.bot.gptbot.domain.AiModel
-import com.discord.bot.gptbot.repository.ChatGptRepository
+import com.discord.bot.gptbot.repository.OpenAiRepository
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.slot
@@ -15,7 +15,7 @@ import reactor.core.publisher.Mono
 
 class OpenAiServiceTest {
 
-    private val repository = mockk<ChatGptRepository>()
+    private val repository = mockk<OpenAiRepository>()
 
     private val service = OpenAiService(repository)
 

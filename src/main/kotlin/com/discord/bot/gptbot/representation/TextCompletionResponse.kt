@@ -1,6 +1,6 @@
 package com.discord.bot.gptbot.representation
 
-class CompletionResponse {
+class TextCompletionResponse {
 
     lateinit var choices: List<Choice>
 

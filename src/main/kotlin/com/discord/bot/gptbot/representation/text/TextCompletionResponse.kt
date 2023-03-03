@@ -1,4 +1,4 @@
-package com.discord.bot.gptbot.representation
+package com.discord.bot.gptbot.representation.text
 
 class TextCompletionResponse {
 

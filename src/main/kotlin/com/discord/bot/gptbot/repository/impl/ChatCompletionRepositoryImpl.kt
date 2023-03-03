@@ -2,8 +2,8 @@ package com.discord.bot.gptbot.repository.impl
 
 import com.discord.bot.gptbot.domain.AiModel
 import com.discord.bot.gptbot.repository.OpenAiRepository
-import com.discord.bot.gptbot.representation.ChatCompletionRequest
-import com.discord.bot.gptbot.representation.ChatCompletionResponse
+import com.discord.bot.gptbot.representation.chat.ChatCompletionRequest
+import com.discord.bot.gptbot.representation.chat.ChatCompletionResponse
 import com.discord.bot.gptbot.representation.chat.ChatMessage
 import com.discord.bot.gptbot.representation.chat.Role
 import org.springframework.stereotype.Repository

@@ -1,6 +1,10 @@
 package com.discord.bot.gptbot.representation.chat
 
-enum class Role(val text: String) {
+enum class Role(private val text: String) {
     USER("user"),
-    ASSISTANT("assistant"),
+    ASSISTANT("assistant");
+
+    override fun toString(): String {
+        return text
+    }
 }

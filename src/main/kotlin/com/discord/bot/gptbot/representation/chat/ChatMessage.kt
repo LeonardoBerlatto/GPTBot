@@ -1,6 +1,12 @@
 package com.discord.bot.gptbot.representation.chat
 
-data class ChatMessage(
-    val role: Role,
-    val content: String,
-)
+class ChatMessage() {
+    lateinit var role: Role
+    lateinit var content: String
+
+
+    constructor(role: Role, content: String) : this() {
+        this.role = role
+        this.content = content
+    }
+}

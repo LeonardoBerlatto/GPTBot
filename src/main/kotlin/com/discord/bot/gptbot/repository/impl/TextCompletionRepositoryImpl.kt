@@ -1,9 +1,9 @@
 package com.discord.bot.gptbot.repository.impl
 
-import com.discord.bot.gptbot.representation.TextCompletionResponse
+import com.discord.bot.gptbot.representation.text.TextCompletionResponse
 import com.discord.bot.gptbot.domain.AiModel
 import com.discord.bot.gptbot.repository.OpenAiRepository
-import com.discord.bot.gptbot.representation.TextCompletion
+import com.discord.bot.gptbot.representation.text.TextCompletion
 import org.springframework.stereotype.Repository
 import org.springframework.web.reactive.function.client.WebClient
 import reactor.core.publisher.Mono

@@ -1,4 +1,4 @@
-package com.discord.bot.gptbot.representation
+package com.discord.bot.gptbot.representation.text
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies
 import com.fasterxml.jackson.databind.annotation.JsonNaming

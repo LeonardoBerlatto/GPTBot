@@ -6,6 +6,7 @@ on:
       - release/**
 
 env:
+  BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
   COMMIT_TEXT: "${{ github.event.head_commit.message }}"
   DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
   DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}

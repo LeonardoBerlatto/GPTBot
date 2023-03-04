@@ -16,6 +16,8 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.PAT_TOKEN }}
 
       - name: Setup Python
         uses: actions/setup-python@v4
@@ -58,6 +60,8 @@ jobs:
       - name: Commit & Push changes
         uses: actions-js/push@master
         with:
+          author_name: github-actions
+          author_email: github-actions@github.com
           github_token: ${{ secrets.PAT_TOKEN }}
           message: "Update version to ${{ steps.set-tag.outputs.tag_name }}"
 

@@ -44,7 +44,7 @@ jobs:
             })
 
       - name: Update version in files
-        run: python update_version.py
+        run: python ./actions/update_version.py
         env:
           VERSION: ${{ steps.set-tag.outputs.tag_name }}
       
@@ -68,11 +68,11 @@ jobs:
           tags: ${{ env.DOCKER_USERNAME }}/gpt-bot:${{ steps.set-tag.outputs.tag_name }}
 
       - name: Create Release notes file
-        run: python create_release_notes.py
+        run: python ./actions/create_release_notes.py
 
       - name: Create Release on GitHub
         uses: ncipollo/release-action@v1.12.0
         with:
           tag: ${{ steps.set-tag.outputs.tag_name }}
           bodyFile: './release_notes.txt'
-          token: ${{ github.token }}
+          token: ${{ secrets.PAT_TOKEN }}

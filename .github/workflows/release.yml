@@ -46,12 +46,14 @@ jobs:
 
       - name: Set Tag Output
         id: set-tag
-        run:  echo "::set-output name=tag_name::$(python ./actions/get_version.py)"
+        run: |
+          echo "{version}={$(python ./actions/get_version.py)}" >> $GITHUB_OUTPUT
+          echo "{tag_name}={v$(python ./actions/get_version.py)}" >> $GITHUB_OUTPUT
 
       - uses: mukunku/tag-exists-action@v1.2.0
         id: checkTag
         with: 
-          tag: v${{ steps.set-tag.outputs.tag_name }}
+          tag: ${{ steps.set-tag.outputs.tag_name }}
 
       - name: Create Tag
         if: ${{ steps.checkTag.outputs.exists == 'false' }}
@@ -63,20 +65,20 @@ jobs:
             github.git.createRef({
               owner: context.repo.owner,
               repo: context.repo.repo,
-             ref: "refs/tags/v${{ steps.set-tag.outputs.tag_name }}",
+             ref: "refs/tags/${{ steps.set-tag.outputs.tag_name }}",
               sha: context.sha
             })
 
       - name: Checkout to new tag
         uses: actions/checkout@v3
         with:
-          ref: v${{ steps.set-tag.outputs.tag_name }}
+          ref: ${{ steps.set-tag.outputs.tag_name }}
           token: ${{ secrets.PAT_TOKEN }}
 
       - name: Update version in files
         run: python ./actions/update_version.py
         env:
-          VERSION: ${{ steps.set-tag.outputs.tag_name }}
+          VERSION: ${{ steps.set-tag.outputs.version }}
       
       - name: Commit & Push changes
         uses: actions-js/push@master
@@ -84,7 +86,7 @@ jobs:
           author_name: github-actions
           author_email: github-actions@github.com
           github_token: ${{ secrets.PAT_TOKEN }}
-          message: "Update version to ${{ steps.set-tag.outputs.tag_name }}"
+          message: "Update version to ${{ steps.set-tag.outputs.version }}"
 
       - name: Docker login
         uses: docker/login-action@v2
@@ -98,11 +100,13 @@ jobs:
           context: ./
           file: ./docker/Dockerfile
           push: true
-          tags: ${{ env.DOCKER_USERNAME }}/gpt-bot:${{ steps.set-tag.outputs.tag_name }}
+          tags: ${{ env.DOCKER_USERNAME }}/gpt-bot:${{ steps.set-tag.outputs.version }}
 
       - name: Create Release notes file
         run: python ./actions/create_release_notes.py
-
+        env:
+          VERSION: ${{ steps.set-tag.outputs.version }}
+        
       - name: Create Release on GitHub
         uses: ncipollo/release-action@v1.12.0
         with:

@@ -49,8 +49,15 @@ jobs:
         run: |
           echo "{version}={$(python ./actions/get_version.py)}" >> $GITHUB_OUTPUT
           echo "{tag_name}={v$(python ./actions/get_version.py)}" >> $GITHUB_OUTPUT
+      
+      # output set-tag:
+      - name: output 
+        run: |
+          echo "version: ${{ steps.set-tag.outputs.version }}"
+          echo "tag_name: ${{ steps.set-tag.outputs.tag_name }}" 
 
-      - uses: mukunku/tag-exists-action@v1.2.0
+      - name: Check if tag exists
+        uses: mukunku/tag-exists-action@v1.2.0
         id: checkTag
         with: 
           tag: ${{ steps.set-tag.outputs.tag_name }}

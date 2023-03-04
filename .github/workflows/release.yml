@@ -24,11 +24,11 @@ jobs:
     
       - name: Get version
         id: get-version
-        run: python get_version.py"
+        run: python ./actions/get_version.py
 
       - name: Set Tag Output
         id: set-tag
-        run:  echo "::set-output name=tag_name::$(python get_version.py)"
+        run:  echo "::set-output name=tag_name::$(python ./actions/get_version.py)"
 
       - name: Create Tag
         uses: actions/github-script@v3

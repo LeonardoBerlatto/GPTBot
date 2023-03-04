@@ -51,7 +51,7 @@ jobs:
       - uses: mukunku/tag-exists-action@v1.2.0
         id: checkTag
         with: 
-          tag: ${{ steps.set-tag.outputs.tag_name }}
+          tag: v${{ steps.set-tag.outputs.tag_name }}
 
       - name: Create Tag
         if: ${{ steps.checkTag.outputs.exists == 'false' }}
@@ -63,10 +63,15 @@ jobs:
             github.git.createRef({
               owner: context.repo.owner,
               repo: context.repo.repo,
-             ref: "refs/tags/${{ steps.set-tag.outputs.tag_name }}",
+             ref: "refs/tags/v${{ steps.set-tag.outputs.tag_name }}",
               sha: context.sha
             })
 
+      - name: Checkout to new tag
+        uses: actions/checkout@v3
+        with:
+          ref: v${{ steps.set-tag.outputs.tag_name }}
+          token: ${{ secrets.PAT_TOKEN }}
 
       - name: Update version in files
         run: python ./actions/update_version.py
@@ -90,7 +95,8 @@ jobs:
       - name: Build & Push Docker image
         uses: docker/build-push-action@v2
         with:
-          context: ./docker
+          context: ./
+          file: ./docker/Dockerfile
           push: true
           tags: ${{ env.DOCKER_USERNAME }}/gpt-bot:${{ steps.set-tag.outputs.tag_name }}
 
@@ -100,6 +106,6 @@ jobs:
       - name: Create Release on GitHub
         uses: ncipollo/release-action@v1.12.0
         with:
-          tag: ${{ steps.set-tag.outputs.tag_name }}
+          tag: v${{ steps.set-tag.outputs.tag_name }}
           bodyFile: './release_notes.txt'
           token: ${{ secrets.PAT_TOKEN }}

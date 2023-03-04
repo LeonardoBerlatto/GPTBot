@@ -47,8 +47,8 @@ jobs:
       - name: Set Tag Output
         id: set-tag
         run: |
-          echo "{version}={$(python ./actions/get_version.py)}" >> $GITHUB_OUTPUT
-          echo "{tag_name}={v$(python ./actions/get_version.py)}" >> $GITHUB_OUTPUT
+          echo "version=$(python ./actions/get_version.py)" >> $GITHUB_OUTPUT
+          echo "tag_name=v$(python ./actions/get_version.py)" >> $GITHUB_OUTPUT
       
       # output set-tag:
       - name: output 

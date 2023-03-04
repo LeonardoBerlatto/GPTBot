@@ -2,8 +2,7 @@ name: Create Release
 
 on:
   push:
-    branches:
-      - release/**
+    branches: [ main ]
 
 env:
   BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
@@ -32,7 +31,6 @@ jobs:
         env:
           TAG: ${{ steps.set-tag.outputs.tag_name }}
         with:
-          github-token: ${{ github.token }}
           script: |
             github.git.createRef({
               owner: context.repo.owner,
@@ -49,7 +47,7 @@ jobs:
       - name: Commit & Push changes
         uses: actions-js/push@master
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.PAT_TOKEN }}
           message: "Update version to ${{ steps.set-tag.outputs.tag_name }}"
 
       - name: Docker login

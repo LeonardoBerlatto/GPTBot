@@ -1,5 +1,9 @@
 import os
 
-branch = os.environ.get('BRANCH_NAME', '')
+commit_text = os.environ.get('COMMIT_TEXT', '')
 
-print(branch.split('/')[1])
+commit_parts = commit_text.split('\n\n')
+
+commit_title = commit_parts[0]
+
+print(commit_title.split(' ')[1])

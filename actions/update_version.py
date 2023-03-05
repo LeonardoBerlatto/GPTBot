@@ -9,4 +9,3 @@ lines[0] = 'version=' + new_version
 with open('gradle.properties', 'w') as out_file:
     for line in lines:
         out_file.write(line)
-

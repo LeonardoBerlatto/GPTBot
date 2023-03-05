@@ -73,7 +73,7 @@ jobs:
           git config --global user.email "github-actions@github.com"
           git add .
           git commit -m "Update version to ${{ steps.set-tag.outputs.version }}"
-          git tag - a ${{ steps.set-tag.outputs.tag_name }} -m "Release ${{ steps.set-tag.outputs.tag_name }}"
+          git tag -a ${{ steps.set-tag.outputs.tag_name }} -m "Release ${{ steps.set-tag.outputs.tag_name }}"
           git push origin ${{ steps.set-tag.outputs.tag_name }}
 
       - name: Docker login

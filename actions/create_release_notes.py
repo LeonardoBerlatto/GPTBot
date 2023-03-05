@@ -19,4 +19,4 @@ image_sha = os.environ.get('IMAGE_SHA', '')
 docker_username = os.environ.get('DOCKER_USERNAME', '')
 
 release_notes_file.write('## Image:\n\n')
-release_notes_file.write(f'({version})[https://hub.docker.com/layers/{docker_username}/gpt-bot/{version}/images/sha256-{image_sha}]')
+release_notes_file.write(f'[{version}](https://hub.docker.com/layers/{docker_username}/gpt-bot/{version}/images/sha256-{image_sha})')

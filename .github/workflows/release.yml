@@ -30,10 +30,7 @@ jobs:
         uses: gradle/gradle-build-action@v2
 
       - name: Build with Gradle
-        run: ./gradlew build -x test
-      
-      - name: Run tests
-        run: ./gradlew test
+        run: ./gradlew build
 
   create-release:
     needs: build
@@ -54,12 +51,6 @@ jobs:
         run: |
           echo "version=$(python ./actions/get_version.py)" >> $GITHUB_OUTPUT
           echo "tag_name=v$(python ./actions/get_version.py)" >> $GITHUB_OUTPUT
-      
-     
-      - name: output 
-        run: |
-          echo "version: ${{ steps.set-tag.outputs.version }}"
-          echo "tag_name: ${{ steps.set-tag.outputs.tag_name }}" 
 
       - name: Check if tag exists
         uses: mukunku/tag-exists-action@v1.2.0

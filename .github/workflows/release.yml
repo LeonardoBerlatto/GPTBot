@@ -111,7 +111,7 @@ jobs:
           context: ./
           file: ./docker/Dockerfile
           push: true
-          tags: ${{ env.DOCKER_USERNAME }}/gpt-bot:${{ steps.set-tag.outputs.version }}
+          tags: ${{ env.DOCKER_USERNAME }}/gpt-bot:${{ steps.set-tag.outputs.version }},${{ env.DOCKER_USERNAME }}/gpt-bot:latest
 
       - name: Create Release notes file
         run: python ./actions/create_release_notes.py

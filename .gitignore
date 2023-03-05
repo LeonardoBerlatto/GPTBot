@@ -39,3 +39,9 @@ out/
 
 ### Discord Token ###
 /src/main/resources/application-dev.yaml
+
+### Metrics ###
+/data
+
+### .env ###
+.env

@@ -1,0 +1,13 @@
+version: '3.9'
+services:
+
+  bot:
+    build:
+      context: ../
+      dockerfile: ./docker/Dockerfile
+    env_file: ../.env
+    container_name: gpt-bot
+    restart: always
+    ports:
+      - '8080:8080'
+  

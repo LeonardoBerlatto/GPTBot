@@ -23,6 +23,8 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     // logging
     implementation("io.github.microutils:kotlin-logging-jvm:3.0.5")
+    // prometheus
+    implementation("io.micrometer:micrometer-registry-prometheus")
     // discord
     implementation("net.dv8tion:JDA:5.0.0-beta.4")
     // tests

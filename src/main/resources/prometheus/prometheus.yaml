@@ -1,0 +1,13 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+scrape_configs:
+  - job_name: 'prometheusJob'
+    scrape_interval: 3s
+    static_configs:
+      - targets: ['localhost:9090']
+  - job_name: 'Spring Boot Application input'
+    scrape_interval: 3s
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['localhost:8080']

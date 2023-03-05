@@ -14,7 +14,7 @@ env:
 
 jobs:
   create-release:
-    if: ${{ github.actor != 'github-actions' }} && contains( github.event.head_commit.message, 'release' )
+    if: ${{ github.actor != 'github-actions' }} && contains( github.event.head_commit.message, 'release ' )
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code

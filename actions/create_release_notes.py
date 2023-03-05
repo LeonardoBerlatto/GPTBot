@@ -14,3 +14,9 @@ release_notes_file.write(f'# Version {version}\n\n')
 release_notes_file.write('## Features:\n\n')
 for line in commit_body_lines:
     release_notes_file.write(f'* {line}\n')
+
+image_sha = os.environ.get('IMAGE_SHA', '')
+docker_username = os.environ.get('DOCKER_USERNAME', '')
+
+release_notes_file.write('## Image:\n\n')
+release_notes_file.write(f'({version})[https://hub.docker.com/layers/{docker_username}/gpt-bot/{version}/images/sha256-{image_sha}]')

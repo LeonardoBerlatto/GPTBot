@@ -14,7 +14,7 @@ env:
 
 jobs:
   create-release:
-    if: ${{ github.actor != 'github-actions' }}
+    if: ${{ github.actor != 'github-actions' }} && contains( github.event.head_commit.message, 'release' )
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
@@ -103,6 +103,7 @@ jobs:
           password: ${{ env.DOCKER_PASSWORD }}
 
       - name: Build & Push Docker image
+        id: docker
         uses: docker/build-push-action@v2
         with:
           context: ./
@@ -114,6 +115,7 @@ jobs:
         run: python ./actions/create_release_notes.py
         env:
           VERSION: ${{ steps.set-tag.outputs.version }}
+          IMAGE_SHA: ${{ steps.docker.outputs.digest }}
         
       - name: Create Release on GitHub
         uses: ncipollo/release-action@v1.12.0

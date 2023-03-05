@@ -10,6 +10,6 @@ commit_body_lines = commit_parts[1::]
 
 release_notes_file = open('release_notes.txt', 'w')
 
-release_notes_file.write('Version '.concat(version).concat('\n\n'))
+release_notes_file.write(f'Version {version}\n\n')
 for line in commit_body_lines:
-    release_notes_file.write('* '.concat(line).concat('\n'))
+    release_notes_file.write(f'* {line}\n')

@@ -1,7 +1,5 @@
 name: Create Release
 
-# must trigger only if the author is not a bot
-
 on:
   push:
     branches: [ main ]
@@ -13,8 +11,7 @@ env:
   DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
 
 jobs:
-  create-release:
-    if: ${{ (github.actor != 'github-actions') && (contains(github.event.head_commit.message, 'release') }}
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
@@ -35,6 +32,11 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build -x test
 
+  create-release:
+    needs: build
+    if: ${{ (github.actor != 'github-actions') && (contains(github.event.head_commit.message, 'release') }}
+    runs-on: ubuntu-latest
+    steps:
       - name: Setup Python
         uses: actions/setup-python@v4
         with:

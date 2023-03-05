@@ -88,13 +88,13 @@ jobs:
           VERSION: ${{ steps.set-tag.outputs.version }}
       
       - name: Commit & Push changes
-        uses: actions-js/push@master
-        with:
-          author_name: github-actions
-          author_email: github-actions@github.com
-          github_token: ${{ secrets.PAT_TOKEN }}
-          message: "Update version to ${{ steps.set-tag.outputs.version }}"
-          branch: ${{ steps.set-tag.outputs.tag_name }}
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git add .
+          git tag -a ${{ steps.set-tag.outputs.tag_name }} -m "Update version to ${{ steps.set-tag.outputs.version }}"
+          git commit -m "Update version to ${{ steps.set-tag.outputs.version }}"
+          git push origin ${{ steps.set-tag.outputs.tag_name }}
 
       - name: Docker login
         uses: docker/login-action@v2

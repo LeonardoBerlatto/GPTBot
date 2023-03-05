@@ -62,26 +62,6 @@ jobs:
         with: 
           tag: ${{ steps.set-tag.outputs.tag_name }}
 
-      # - name: Create Tag
-      #   if: ${{ steps.checkTag.outputs.exists == 'false' }}
-      #   uses: actions/github-script@v3
-      #   env:
-      #     TAG: ${{ steps.set-tag.outputs.tag_name }}
-      #   with:
-      #     script: |
-      #       github.git.createRef({
-      #         owner: context.repo.owner,
-      #         repo: context.repo.repo,
-      #        ref: "refs/tags/${{ steps.set-tag.outputs.tag_name }}",
-      #         sha: context.sha
-      #       })
-
-      # - name: Checkout to new tag
-      #   uses: actions/checkout@v3
-      #   with:
-      #     ref: ${{ steps.set-tag.outputs.tag_name }}
-      #     token: ${{ secrets.PAT_TOKEN }}
-
       - name: Update version in files
         run: python ./actions/update_version.py
         env:

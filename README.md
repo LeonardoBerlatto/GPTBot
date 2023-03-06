@@ -1,6 +1,6 @@
 # GPTBot
 
-ChatGPT Discord 🤖
+ChatGPT Discord Bot 🤖
 
 ## Commands 💬
 

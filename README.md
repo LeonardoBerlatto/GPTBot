@@ -5,10 +5,9 @@ ChatGPT Discord Bot 🤖
 ## Commands 💬
 
 ### `/ask` 
-Use **/ask** to ask something to ChatGPT and it will answer you 
+> Use **/ask** to ask something to ChatGPT and it will answer you 
 
-
-https://user-images.githubusercontent.com/36887738/222993730-d7ce13fc-a6f0-4a8f-8414-07af61b09c46.mov
+![ezgif-5-607f3e07cb](https://user-images.githubusercontent.com/36887738/223024146-efa40580-dac6-4cbf-887f-7aa4cd922555.gif)
 
 
 ## Tech Stack 🔮
